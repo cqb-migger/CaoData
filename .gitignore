@@ -21,3 +21,6 @@ downloads/
 .idea/
 .claude/
 .history/
+
+# Thư mục dữ liệu JSON đầu ra (được sinh ra tự động khi chạy code)
+json/
