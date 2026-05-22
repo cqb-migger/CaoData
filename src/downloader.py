@@ -246,6 +246,9 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
         for lesson_idx, lesson in enumerate(lessons):
             lesson_title = lesson.get("ten_bai_hoc", f"Lesson_{lesson_idx}")
             lesson_slug = slugify(lesson_title)
+            # Neu la bai hoc mien phi, danh dau thu muc bang hau to _free
+            if lesson.get("mien_phi") == "Có":
+                lesson_slug += "_free"
             
             # Thu muc goc cua bai hoc nay
             lesson_dir = os.path.join(download_dir, source_name, course_slug, lesson_slug)
