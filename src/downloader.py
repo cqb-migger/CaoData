@@ -246,12 +246,14 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
         for lesson_idx, lesson in enumerate(lessons):
             lesson_title = lesson.get("ten_bai_hoc", f"Lesson_{lesson_idx}")
             lesson_slug = slugify(lesson_title)
-            # Neu la bai hoc mien phi, danh dau thu muc bang hau to _free
+            # Neu la bai hoc mien phi, danh dau thu muc bang tien to [FREE]_ de nguoi dung de nhan biet
             if lesson.get("mien_phi") == "Có":
-                lesson_slug += "_free"
+                lesson_folder = f"[FREE]_{lesson_slug}"
+            else:
+                lesson_folder = lesson_slug
             
             # Thu muc goc cua bai hoc nay
-            lesson_dir = os.path.join(download_dir, source_name, course_slug, lesson_slug)
+            lesson_dir = os.path.join(download_dir, source_name, course_slug, lesson_folder)
 
             # 1.1 Taim anh Thumbnail bai hoc (link_hinh_anh_goc)
             thumb_url = lesson.get("link_hinh_anh_goc")

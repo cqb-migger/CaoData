@@ -76,13 +76,13 @@ CaoData/
 ├── downloads/              # Thư mục lưu trữ tất cả tài nguyên đã tải về cục bộ
 │   ├── cambridge/          # Tài nguyên giáo trình Cambridge
 │   │   └── tieng_anh_lop_1/
-│   │       └── unit_1_this_is_his_face_free/  # Hậu tố _free cho bài học miễn phí
+│   │       └── [FREE]_unit_1_this_is_his_face/  # Tiền tố [FREE]_ cho bài học miễn phí
 │   │           ├── thumbnail.jpg
 │   │           └── bai_hoc/
 │   │               └── media/    # Chứa video chính (.mp4)
 │   └── phonics/            # Tài nguyên khóa Phonics
 │       └── phonics_for_starters/
-│           └── unit_1_aa_free/
+│           └── [FREE]_unit_1_aa/
 │               └── ...
 └── src/
     ├── __init__.py         # Khởi tạo module src

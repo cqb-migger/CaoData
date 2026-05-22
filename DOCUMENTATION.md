@@ -602,7 +602,7 @@ python src/downloader.py --dest "D:/AlokiddyResources"
 
 ### Cấu trúc kết quả thư mục sau khi tải
 
-Khi tải tài nguyên, hệ thống sẽ tự động chuyển đổi tên tiếng Việt và các khoảng trắng thành chuỗi không dấu, an toàn trên Windows (`slugify`). Đặc biệt, **các thư mục bài học miễn phí sẽ tự động được bổ sung hậu tố `_free`** để người dùng dễ dàng nhận biết các bài học có đầy đủ tài nguyên offline:
+Khi tải tài nguyên, hệ thống sẽ tự động chuyển đổi tên tiếng Việt và các khoảng trắng thành chuỗi không dấu, an toàn trên Windows (`slugify`). Đặc biệt, **các thư mục bài học miễn phí sẽ tự động được bổ sung tiền tố `[FREE]_`** để người dùng cực kỳ dễ dàng nhận biết và các bài học này sẽ tự động nhóm lại ở đầu danh sách trong Windows Explorer:
 
 ```
 CaoData/
@@ -612,7 +612,7 @@ CaoData/
 └── downloads/
     ├── cambridge/
     │   └── tieng_anh_mau_giao_lon/
-    │       ├── unit_3_drinks_free/  # Bài học miễn phí (chứa đầy đủ tài nguyên tải về)
+    │       ├── [FREE]_unit_3_drinks/  # Bài học miễn phí (chứa đầy đủ tài nguyên tải về)
     │       │   ├── thumbnail.jpg  # Ảnh cover bài học
     │       │   ├── bai_hoc/
     │       │   │   └── media/     # Chứa các file video chính .mp4
@@ -623,7 +623,7 @@ CaoData/
     │           └── thumbnail.jpg
     └── phonics/
         └── phonics_for_starters/
-            └── unit_1_aa_free/
+            └── [FREE]_unit_1_aa/
                 ├── thumbnail.png
                 ├── bai_hoc/
                 │   └── media/
