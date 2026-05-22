@@ -86,11 +86,14 @@ def get_session():
         _thread_local.session = make_session()
     return _thread_local.session
 
-def log_404(url):
-    """Ghi URL bi 404 vao file log de de theo doi."""
+def log_404(url, context_str=None):
+    """Ghi URL bi 404 kem nguon goc chi tiet vao file log de de theo doi."""
     try:
         with open(NOT_FOUND_LOG, 'a', encoding='utf-8') as f:
-            f.write(url + '\n')
+            if context_str:
+                f.write(f"[{context_str}] {url}\n")
+            else:
+                f.write(url + '\n')
     except Exception:
         pass
 
@@ -135,7 +138,7 @@ def get_file_extension(url, default="bin"):
         return "mp3"
     return default
 
-def download_single_file(url, dest_path, dry_run=False, max_retries=5):
+def download_single_file(url, dest_path, dry_run=False, max_retries=5, context_str=None):
     """
     Thuc hien tai mot file duy nhat tu URL ve duong dan dich.
     Ho tro bo qua neu file da ton tai va dung dinh dang.
@@ -188,7 +191,7 @@ def download_single_file(url, dest_path, dry_run=False, max_retries=5):
                     return False, "File tam bi mat sau khi tai"
             elif response.status_code == 404:
                 # HTTP 404: file khong ton tai tren server, ghi log va bo qua luon
-                log_404(url)
+                log_404(url, context_str)
                 return False, f"HTTP Error 404"
             else:
                 raise requests.exceptions.HTTPError(f"HTTP Error {response.status_code}")
@@ -256,7 +259,10 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
                 # Tham chieu cap nhat: key la "thumbnail", value la lesson dict
                 add_task(thumb_url, dest_thumb_path, {
                     "type": "thumbnail",
-                    "lesson_dict": lesson
+                    "lesson_dict": lesson,
+                    "course": course_title,
+                    "lesson": lesson_title,
+                    "tab": "Ảnh Thumbnail"
                 })
 
             # 1.2 Tai chi tiet tai nguyen cua tung tab
@@ -296,7 +302,10 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
                         add_task(url, dest_media_path, {
                             "type": "media",
                             "tab_dict": tab,
-                            "index": media_idx
+                            "index": media_idx,
+                            "course": course_title,
+                            "lesson": lesson_title,
+                            "tab": tab_title
                         })
 
                 # Hinh anh tab (JPG, PNG)
@@ -325,7 +334,10 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
                         add_task(url, dest_img_path, {
                             "type": "image",
                             "tab_dict": tab,
-                            "index": img_idx
+                            "index": img_idx,
+                            "course": course_title,
+                            "lesson": lesson_title,
+                            "tab": tab_title
                         })
 
     total_unique_files = len(download_tasks)
@@ -349,7 +361,13 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
         # Gui tat ca cac tac vu tai len thread pool
         futures_map = {}
         for (url, dest_path), refs in download_tasks.items():
-            future = executor.submit(download_single_file, url, dest_path, dry_run)
+            ref = refs[0] if refs else {}
+            course = ref.get("course", "Khóa học ẩn")
+            lesson = ref.get("lesson", "Bài học ẩn")
+            tab = ref.get("tab", "Phần học ẩn")
+            context_str = f"Khóa: {course} | Bài: {lesson} | Phần: {tab}"
+            
+            future = executor.submit(download_single_file, url, dest_path, dry_run, 5, context_str)
             futures_map[future] = (url, dest_path, refs)
 
         # Su dung tqdm hien thi thanh tien trinh truc quan
