@@ -380,12 +380,12 @@ def scrape_course(driver: webdriver.Chrome, course_url: str, course_hint_name: s
             if img_url.startswith('//'): img_url = 'https:' + img_url
 
             all_data.append({
-                "Tên Bài Học": title,
-                "Miễn phí": is_free,
-                "Link Hình Ảnh (Gốc)": img_url,
-                "Nội Dung Chi Tiết": f"Bài học phát âm Phonics cho {title}",
-                "Link Bài Học": link_bai,
-                "Chi tiết tài nguyên": []
+                "ten_bai_hoc": title,
+                "mien_phi": is_free,
+                "link_hinh_anh_goc": img_url,
+                "noi_dung_chi_tiet": f"Bài học phát âm Phonics cho {title}",
+                "link_bai_hoc": link_bai,
+                "chi_tiet_tai_nguyen": []
             })
     else:
         items = soup.select('.item_box')
@@ -410,12 +410,12 @@ def scrape_course(driver: webdriver.Chrome, course_url: str, course_hint_name: s
             content = item.select_one('.intro_news').get_text(separator="\n").strip() if item.select_one('.intro_news') else ""
 
             all_data.append({
-                "Tên Bài Học": title,
-                "Miễn phí": is_free,
-                "Link Hình Ảnh (Gốc)": img_url,
-                "Nội Dung Chi Tiết": content,
-                "Link Bài Học": link_bai,
-                "Chi tiết tài nguyên": []
+                "ten_bai_hoc": title,
+                "mien_phi": is_free,
+                "link_hinh_anh_goc": img_url,
+                "noi_dung_chi_tiet": content,
+                "link_bai_hoc": link_bai,
+                "chi_tiet_tai_nguyen": []
             })
 
     logger.info(f"==> TRONG ĐÓ {len(free_lessons)} BÀI MIỄN PHÍ (SẼ CÀO SÂU TÀI NGUYÊN)")
@@ -466,17 +466,17 @@ def scrape_course(driver: webdriver.Chrome, course_url: str, course_hint_name: s
                 tai_nguyen_data = get_all_resources(driver, driver.current_url)
 
                 detail_list.append({
-                    "Bài học": tab_name,
-                    "Link Icon": "",  # Phonics dùng icon sprites class css, không có link img riêng biệt
-                    "Link gốc": driver.current_url,
-                    "Tài nguyên Media": tai_nguyen_data["media"],
-                    "Tài nguyên Hình ảnh": tai_nguyen_data["images"],
-                    "Nội dung văn bản": tai_nguyen_data["text"]
+                    "ten_tab": tab_name,
+                    "link_icon": "",  # Phonics dùng icon sprites class css, không có link img riêng biệt
+                    "link_goc": driver.current_url,
+                    "tai_nguyen_media": tai_nguyen_data["media"],
+                    "tai_nguyen_hinh_anh": tai_nguyen_data["images"],
+                    "noi_dung_van_ban": tai_nguyen_data["text"]
                 })
 
             for item in all_data:
-                if item["Tên Bài Học"] == lesson['title']:
-                    item["Chi tiết tài nguyên"] = detail_list
+                if item["ten_bai_hoc"] == lesson['title']:
+                    item["chi_tiet_tai_nguyen"] = detail_list
                     break
     else:
         for lesson in free_lessons:
@@ -503,17 +503,17 @@ def scrape_course(driver: webdriver.Chrome, course_url: str, course_hint_name: s
                 tai_nguyen_data = get_all_resources(driver, link_goc)
 
                 detail_list.append({
-                    "Bài học": name,
-                    "Link Icon": sec_info["icon"],
-                    "Link gốc": link_goc,
-                    "Tài nguyên Media": tai_nguyen_data["media"],
-                    "Tài nguyên Hình ảnh": tai_nguyen_data["images"],
-                    "Nội dung văn bản": tai_nguyen_data["text"]
+                    "ten_tab": name,
+                    "link_icon": sec_info["icon"],
+                    "link_goc": link_goc,
+                    "tai_nguyen_media": tai_nguyen_data["media"],
+                    "tai_nguyen_hinh_anh": tai_nguyen_data["images"],
+                    "noi_dung_van_ban": tai_nguyen_data["text"]
                 })
 
             for item in all_data:
-                if item["Tên Bài Học"] == lesson['title']:
-                    item["Chi tiết tài nguyên"] = detail_list
+                if item["ten_bai_hoc"] == lesson['title']:
+                    item["chi_tiet_tai_nguyen"] = detail_list
                     logger.info(f"   -> Đã gộp dữ liệu chi tiết vào bài: {lesson['title']}")
                     break
 

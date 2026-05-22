@@ -399,12 +399,12 @@ def scrape_course(course_url: str, course_hint_name: str = "") -> Tuple[str, Lis
 
             # Đóng gói thông tin cơ bản
             all_data.append({
-                "Tên Bài Học": title,
-                "Miễn phí": is_free,
-                "Link Hình Ảnh (Gốc)": img_url,
-                "Nội Dung Chi Tiết": content,
-                "Link Bài Học": link_bai,
-                "Chi tiết tài nguyên": []
+                "ten_bai_hoc": title,
+                "mien_phi": is_free,
+                "link_hinh_anh_goc": img_url,
+                "noi_dung_chi_tiet": content,
+                "link_bai_hoc": link_bai,
+                "chi_tiet_tai_nguyen": []
             })
 
         logger.info(f"[{course_title}] Cần cào chi tiết {len(free_lessons)} bài miễn phí.")
@@ -440,18 +440,18 @@ def scrape_course(course_url: str, course_hint_name: str = "") -> Tuple[str, Lis
 
                 # Ghi nhận tài nguyên bóc tách được của hoạt động
                 detail_list.append({
-                    "Bài học": name,
-                    "Link Icon": sec_info["icon"],
-                    "Link gốc": link_goc,
-                    "Tài nguyên Media": tai_nguyen_data["media"],
-                    "Tài nguyên Hình ảnh": tai_nguyen_data["images"],
-                    "Nội dung văn bản": tai_nguyen_data["text"]
+                    "ten_tab": name,
+                    "link_icon": sec_info["icon"],
+                    "link_goc": link_goc,
+                    "tai_nguyen_media": tai_nguyen_data["media"],
+                    "tai_nguyen_hinh_anh": tai_nguyen_data["images"],
+                    "noi_dung_van_ban": tai_nguyen_data["text"]
                 })
 
             # Gộp dữ liệu tài nguyên chi tiết vào bài học gốc
             for item in all_data:
-                if item["Tên Bài Học"] == lesson['title']:
-                    item["Chi tiết tài nguyên"] = detail_list
+                if item["ten_bai_hoc"] == lesson['title']:
+                    item["chi_tiet_tai_nguyen"] = detail_list
                     break
 
         logger.info(f"[{course_title}] HOÀN TẤT THÀNH CÔNG.")

@@ -244,14 +244,14 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
         course_slug = slugify(course_title)
         
         for lesson_idx, lesson in enumerate(lessons):
-            lesson_title = lesson.get("Tên Bài Học", f"Lesson_{lesson_idx}")
+            lesson_title = lesson.get("ten_bai_hoc", f"Lesson_{lesson_idx}")
             lesson_slug = slugify(lesson_title)
             
             # Thu muc goc cua bai hoc nay
             lesson_dir = os.path.join(download_dir, source_name, course_slug, lesson_slug)
 
-            # 1.1 Taim anh Thumbnail bai hoc (Link Hinh Anh (Goc))
-            thumb_url = lesson.get("Link Hình Ảnh (Gốc)")
+            # 1.1 Taim anh Thumbnail bai hoc (link_hinh_anh_goc)
+            thumb_url = lesson.get("link_hinh_anh_goc")
             if thumb_url:
                 ext = get_file_extension(thumb_url, "jpg")
                 dest_thumb_path = os.path.join(lesson_dir, f"thumbnail.{ext}")
@@ -266,16 +266,16 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
                 })
 
             # 1.2 Tai chi tiet tai nguyen cua tung tab
-            tabs = lesson.get("Chi tiết tài nguyên", [])
+            tabs = lesson.get("chi_tiet_tai_nguyen", [])
             for tab_idx, tab in enumerate(tabs):
-                tab_title = tab.get("Bài học", f"Tab_{tab_idx}").strip()
+                tab_title = tab.get("ten_tab", f"Tab_{tab_idx}").strip()
                 tab_slug = slugify(tab_title)
                 
                 # Thu muc rieng cua tab
                 tab_dir = os.path.join(lesson_dir, tab_slug)
 
                 # Media tab (MP4, MP3)
-                media_list = tab.get("Tài nguyên Media", [])
+                media_list = tab.get("tai_nguyen_media", [])
                 for media_idx, item in enumerate(media_list):
                     # Ho tro ca truong hop da cap nhat truoc do: item co the la dict {"url": ..., "local": ...}
                     url = item.get("url") if isinstance(item, dict) else item
@@ -285,7 +285,7 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
                             if isinstance(item, dict):
                                 item["local"] = None
                             else:
-                                tab["Tài nguyên Media"][media_idx] = {
+                                tab["tai_nguyen_media"][media_idx] = {
                                     "url": url,
                                     "local": None
                                 }
@@ -309,7 +309,7 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
                         })
 
                 # Hinh anh tab (JPG, PNG)
-                image_list = tab.get("Tài nguyên Hình ảnh", [])
+                image_list = tab.get("tai_nguyen_hinh_anh", [])
                 for img_idx, item in enumerate(image_list):
                     url = item.get("url") if isinstance(item, dict) else item
                     if url:
@@ -318,7 +318,7 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
                             if isinstance(item, dict):
                                 item["local"] = None
                             else:
-                                tab["Tài nguyên Hình ảnh"][img_idx] = {
+                                tab["tai_nguyen_hinh_anh"][img_idx] = {
                                     "url": url,
                                     "local": None
                                 }
@@ -407,19 +407,19 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
             
             if ref_type == "thumbnail":
                 lesson_dict = ref["lesson_dict"]
-                lesson_dict["Link Hình Ảnh (Local)"] = relative_path
+                lesson_dict["link_hinh_anh_local"] = relative_path
             
             elif ref_type == "media":
                 tab_dict = ref["tab_dict"]
                 idx = ref["index"]
                 # Cap nhat phan tu tai index tuong ung thanh dict {url, local}
-                original_item = tab_dict["Tài nguyên Media"][idx]
+                original_item = tab_dict["tai_nguyen_media"][idx]
                 
                 # Giu nguyen neu da la dict, chi cap nhat local path
                 if isinstance(original_item, dict):
                     original_item["local"] = relative_path
                 else:
-                    tab_dict["Tài nguyên Media"][idx] = {
+                    tab_dict["tai_nguyen_media"][idx] = {
                         "url": url,
                         "local": relative_path
                     }
@@ -428,12 +428,12 @@ def process_source(json_path, source_name, download_dir, max_workers=4, dry_run=
                 tab_dict = ref["tab_dict"]
                 idx = ref["index"]
                 # Cap nhat phan tu tai index tuong ung thanh dict {url, local}
-                original_item = tab_dict["Tài nguyên Hình ảnh"][idx]
+                original_item = tab_dict["tai_nguyen_hinh_anh"][idx]
                 
                 if isinstance(original_item, dict):
                     original_item["local"] = relative_path
                 else:
-                    tab_dict["Tài nguyên Hình ảnh"][idx] = {
+                    tab_dict["tai_nguyen_hinh_anh"][idx] = {
                         "url": url,
                         "local": relative_path
                     }

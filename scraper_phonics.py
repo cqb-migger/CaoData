@@ -262,12 +262,12 @@ def scrape_phonics_course() -> Tuple[str, List[Dict[str, Any]]]:
 
             # Cấu trúc ban đầu của 1 bài học (tài nguyên tạm thời rỗng, sẽ điền sau ở Bước 2)
             all_data.append({
-                "Tên Bài Học": title,
-                "Miễn phí": is_free,
-                "Link Hình Ảnh (Gốc)": img_url,
-                "Nội Dung Chi Tiết": f"Bài học phát âm Phonics cho {title}",
-                "Link Bài Học": link_bai,
-                "Chi tiết tài nguyên": []
+                "ten_bai_hoc": title,
+                "mien_phi": is_free,
+                "link_hinh_anh_goc": img_url,
+                "noi_dung_chi_tiet": f"Bài học phát âm Phonics cho {title}",
+                "link_bai_hoc": link_bai,
+                "chi_tiet_tai_nguyen": []
             })
 
         logger.info(f"[{course_title}] Cần cào tài nguyên chi tiết {len(free_lessons)} bài miễn phí.")
@@ -293,8 +293,8 @@ def scrape_phonics_course() -> Tuple[str, List[Dict[str, Any]]]:
                         
                         # Điền dữ liệu chi tiết vào bài học tương ứng trong all_data
                         for item in all_data:
-                            if item["Tên Bài Học"] == title:
-                                item["Chi tiết tài nguyên"] = detail_list
+                            if item["ten_bai_hoc"] == title:
+                                item["chi_tiet_tai_nguyen"] = detail_list
                                 break
                         logger.info(f"✓ CÀO TÀI NGUYÊN THÀNH CÔNG: {title}")
                     except Exception as e:
@@ -363,12 +363,12 @@ def scrape_phonics_lesson(lesson: Dict[str, str]) -> List[Dict[str, Any]]:
 
             # Đóng gói dữ liệu hoạt động vào danh sách
             detail_list.append({
-                "Bài học": tab_name,
-                "Link Icon": "",  # Phonics sử dụng class css sprite chứ không có link file ảnh icon riêng biệt
-                "Link gốc": driver.current_url,
-                "Tài nguyên Media": tai_nguyen_data["media"],
-                "Tài nguyên Hình ảnh": tai_nguyen_data["images"],
-                "Nội dung văn bản": tai_nguyen_data["text"]
+                "ten_tab": tab_name,
+                "link_icon": "",  # Phonics sử dụng class css sprite chứ không có link file ảnh icon riêng biệt
+                "link_goc": driver.current_url,
+                "tai_nguyen_media": tai_nguyen_data["media"],
+                "tai_nguyen_hinh_anh": tai_nguyen_data["images"],
+                "noi_dung_van_ban": tai_nguyen_data["text"]
             })
 
         return detail_list
