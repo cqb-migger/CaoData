@@ -80,6 +80,10 @@ def make_session():
 import threading
 _thread_local = threading.local()
 
+# Lock va cache de tranh ghi trung lap URL 404 vao file log
+_log_lock = threading.Lock()
+_logged_404_cache = set()
+
 def get_session():
     """Lay session cua thread hien tai, tao moi neu chua co."""
     if not hasattr(_thread_local, 'session'):
@@ -87,15 +91,31 @@ def get_session():
     return _thread_local.session
 
 def log_404(url, context_str=None):
-    """Ghi URL bi 404 kem nguon goc chi tiet vao file log de de theo doi."""
-    try:
-        with open(NOT_FOUND_LOG, 'a', encoding='utf-8') as f:
-            if context_str:
-                f.write(f"[{context_str}] {url}\n")
-            else:
-                f.write(url + '\n')
-    except Exception:
-        pass
+    """Ghi URL bi 404 kem nguon goc chi tiet vao file log de de theo doi, dam bao khong trung lap."""
+    if not url:
+        return
+    
+    log_line = f"[{context_str}] {url}\n" if context_str else f"{url}\n"
+    
+    with _log_lock:
+        # Neu cache rong va file log ton tai, doc lai cac log cu de tranh lap qua cac lan chay khac nhau
+        if not _logged_404_cache and os.path.exists(NOT_FOUND_LOG):
+            try:
+                with open(NOT_FOUND_LOG, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        _logged_404_cache.add(line.strip())
+            except Exception:
+                pass
+        
+        # Kiem tra xem da tung ghi nhan dong log nay chua
+        log_key = log_line.strip()
+        if log_key not in _logged_404_cache:
+            try:
+                with open(NOT_FOUND_LOG, 'a', encoding='utf-8') as f:
+                    f.write(log_line)
+                _logged_404_cache.add(log_key)
+            except Exception:
+                pass
 
 def slugify(text):
     """
