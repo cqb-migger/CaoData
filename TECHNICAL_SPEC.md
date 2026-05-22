@@ -40,14 +40,14 @@
 ## 2. Cấu trúc thư mục
 
 ```
-CaoData/
+alokiddy-scraper/
 ├── scraper.py              # Bộ cào Cambridge đơn luồng (tuần tự) - an toàn nhất
 ├── scraper_parallel.py     # Bộ cào Cambridge đa luồng (tối đa 6 Chrome) - nhanh nhất
 ├── scraper_phonics.py      # Bộ cào riêng khóa Phonics đa luồng (4 Chrome)
 ├── requirements.txt        # Thư viện Python phụ thuộc
 ├── README.md               # Hướng dẫn triển khai và vận hành nhanh
-├── TAI_LIEU_KY_THUAT.md    # Tài liệu kỹ thuật: Cấu trúc JSON, kiến trúc bộ cào, thuật toán (tệp hiện tại)
-├── MAU_YEU_CAU_CAO_DATA.md # Cẩm nang & Biểu mẫu yêu cầu khi cần cào các trang web mới
+├── TECHNICAL_SPEC.md       # Tài liệu kỹ thuật: Cấu trúc JSON, kiến trúc bộ cào, thuật toán (tệp hiện tại)
+├── SCRAPING_GUIDELINES.md  # Cẩm nang & Biểu mẫu yêu cầu khi cần cào các trang web mới
 ├── 404_not_found.log       # Nhật ký lưu các liên kết tài nguyên lỗi 404 từ server
 ├── json/
 │   ├── alokiddy_cambridge.json   # Kết quả dữ liệu Cambridge dạng JSON (snake_case keys)
@@ -605,7 +605,7 @@ python src/downloader.py --dest "D:/AlokiddyResources"
 Khi tải tài nguyên, hệ thống sẽ tự động chuyển đổi tên tiếng Việt và các khoảng trắng thành chuỗi không dấu, an toàn trên Windows (`slugify`). Đặc biệt, **các thư mục bài học miễn phí sẽ tự động được bổ sung tiền tố `[FREE]_`** để người dùng cực kỳ dễ dàng nhận biết và các bài học này sẽ tự động nhóm lại ở đầu danh sách trong Windows Explorer:
 
 ```
-CaoData/
+alokiddy-scraper/
 ├── json/
 │   ├── alokiddy_cambridge.json   # JSON đã được cập nhật đường dẫn local
 │   └── alokiddy_phonics.json     # JSON đã được cập nhật đường dẫn local
