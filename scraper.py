@@ -565,7 +565,7 @@ if __name__ == "__main__":
         try:
             logger.info("==> ĐANG TỰ ĐỘNG TẢI TÀI NGUYÊN VÀ CẬP NHẬT JSON...")
             sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-            import downloader
+            from src import downloader
             downloader.process_source(
                 json_path=out_path,
                 source_name="cambridge",

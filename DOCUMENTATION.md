@@ -537,7 +537,7 @@ Thời gian chờ cố định (`1.5s`, `2s`) không thích ứng với tốc đ
 
 ## 9. Hướng dẫn chạy
 
-Hệ thống hỗ trợ cơ chế **chạy 1 bước (Unified Flow)** vô cùng tiện lợi: khi bạn chạy bất kỳ file cào (scraper) nào, sau khi quét xong nó sẽ tự động kích hoạt thư viện `downloader.py` để tải song song các file media về máy và ghi nhận lại đường dẫn local vào file JSON.
+Hệ thống hỗ trợ cơ chế **chạy 1 bước (Unified Flow)** vô cùng tiện lợi: khi bạn chạy bất kỳ file cào (scraper) nào, sau khi quét xong nó sẽ tự động kích hoạt thư viện `src/downloader.py` để tải song song các file media về máy và ghi nhận lại đường dẫn local vào file JSON.
 
 ### 9.1 Chạy tích hợp (Khuyên dùng)
 
@@ -552,25 +552,25 @@ python scraper.py
 python scraper_phonics.py
 ```
 
-### 9.2 Chạy bộ tải độc lập (downloader.py)
+### 9.2 Chạy bộ tải độc lập (src/downloader.py)
 
-Mặc dù các scraper đã tự động gọi bộ tải, bạn vẫn có thể chạy `downloader.py` riêng lẻ để thực hiện tải lại tài nguyên, đổi thư mục lưu trữ, hoặc chạy thử nghiệm nâng cao:
+Mặc dù các scraper đã tự động gọi bộ tải, bạn vẫn có thể chạy `src/downloader.py` riêng lẻ để thực hiện tải lại tài nguyên, đổi thư mục lưu trữ, hoặc chạy thử nghiệm nâng cao:
 
 ```bash
 # Xem hướng dẫn đầy đủ và tất cả các tùy chọn tham số
-python downloader.py --help
+python src/downloader.py --help
 
 # Chạy thử nghiệm xem sẽ tải bao nhiêu file (DRY-RUN - không tải thật, không sửa JSON)
-python downloader.py --dry-run
+python src/downloader.py --dry-run
 
 # Tải tài nguyên cho riêng khóa Phonics (sử dụng 4 luồng tải song song)
-python downloader.py --source phonics --workers 4
+python src/downloader.py --source phonics --workers 4
 
 # Tải tài nguyên cho riêng khóa Cambridge
-python downloader.py --source cambridge --workers 4
+python src/downloader.py --source cambridge --workers 4
 
 # Tải và lưu tài nguyên sang một ổ đĩa hoặc thư mục tùy chọn khác
-python downloader.py --dest "D:/AlokiddyResources"
+python src/downloader.py --dest "D:/AlokiddyResources"
 ```
 
 ### Cấu trúc kết quả thư mục sau khi tải

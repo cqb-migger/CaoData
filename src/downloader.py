@@ -19,8 +19,8 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from tqdm import tqdm
 
-# Dinh nghia cac thu muc mac dinh
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Dinh nghia cac thu muc mac dinh - Chuyen sang BASE_DIR la thu muc cha (root workspace)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_DOWNLOAD_DIR = os.path.join(BASE_DIR, "downloads")
 JSON_CAMBRIDGE_PATH = os.path.join(BASE_DIR, "json", "alokiddy_cambridge.json")
 JSON_PHONICS_PATH = os.path.join(BASE_DIR, "json", "alokiddy_phonics.json")
@@ -53,8 +53,8 @@ HEADERS = {
     "Referer": "https://alokiddy.com.vn/"
 }
 
-# File log cac URL bi 404 de de dang don dep data JSON sau
-NOT_FOUND_LOG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "404_not_found.log")
+# File log cac URL bi 404 de de dang don dep data JSON sau - Luu tai root workspace
+NOT_FOUND_LOG = os.path.join(BASE_DIR, "404_not_found.log")
 
 def make_session():
     """
