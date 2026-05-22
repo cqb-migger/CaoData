@@ -1,4 +1,4 @@
-# 📚 DOCUMENTATION - Alokiddy Data Scraper
+# 📚 TÀI LIỆU KỸ THUẬT - Alokiddy Data Scraper
 
 > Tài liệu kỹ thuật đầy đủ cho dự án cào dữ liệu học tiếng Anh tự động từ [alokiddy.com.vn](https://alokiddy.com.vn)
 
@@ -46,8 +46,8 @@ CaoData/
 ├── scraper_phonics.py      # Bộ cào riêng khóa Phonics đa luồng (4 Chrome)
 ├── requirements.txt        # Thư viện Python phụ thuộc
 ├── README.md               # Hướng dẫn triển khai và vận hành nhanh
-├── DOCUMENTATION.md        # Tài liệu kỹ thuật chi tiết (tệp hiện tại)
-├── HUONG_DAN_CAO_DATA.md   # Hướng dẫn quy trình cào dữ liệu cho các dự án tương lai
+├── TAI_LIEU_KY_THUAT.md    # Tài liệu kỹ thuật: Cấu trúc JSON, kiến trúc bộ cào, thuật toán (tệp hiện tại)
+├── MAU_YEU_CAU_CAO_DATA.md # Cẩm nang & Biểu mẫu yêu cầu khi cần cào các trang web mới
 ├── 404_not_found.log       # Nhật ký lưu các liên kết tài nguyên lỗi 404 từ server
 ├── json/
 │   ├── alokiddy_cambridge.json   # Kết quả dữ liệu Cambridge dạng JSON (snake_case keys)

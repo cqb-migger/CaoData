@@ -58,6 +58,16 @@ python scraper_phonics.py
 
 ---
 
+## 📖 Hệ thống tài liệu dự án
+
+Để giúp các kỹ sư và người quản lý dễ dàng nắm bắt dự án, hệ thống tài liệu được chia thành 3 tệp với chức năng riêng biệt:
+
+1. **`README.md`** (Tệp hiện tại): Tài liệu **tổng quan và vận hành**. Chứa hướng dẫn cài đặt môi trường, cách khởi chạy các kịch bản cào dữ liệu và cấu trúc dự án cơ bản.
+2. **`TAI_LIEU_KY_THUAT.md`**: Tài liệu **chuyên sâu về kiến trúc**. Mô tả chi tiết cấu trúc dữ liệu JSON đầu ra, luồng hoạt động của các tệp mã nguồn (`scraper.py`, `downloader.py`), các điểm mù/lỗi ẩn của trang web Alokiddy và kỹ thuật bóc tách iframe trò chơi.
+3. **`MAU_YEU_CAU_CAO_DATA.md`**: **Cẩm nang & Biểu mẫu chuẩn hóa**. Hướng dẫn quy trình bóc tách HTML, trích xuất API nội bộ, và cung cấp biểu mẫu chuẩn để yêu cầu (hoặc nhờ AI hỗ trợ) viết bộ cào cho các trang web mới một cách tiết kiệm chi phí token và tối ưu hiệu suất nhất.
+
+---
+
 ## 📂 Cấu trúc thư mục dự án
 
 ```text
@@ -67,8 +77,8 @@ CaoData/
 ├── scraper_phonics.py      # Bộ cào riêng khóa Phonics đa luồng (4 Chrome)
 ├── requirements.txt        # Thư viện Python phụ thuộc
 ├── README.md               # Hướng dẫn triển khai và vận hành nhanh (tệp hiện tại)
-├── DOCUMENTATION.md        # Tài liệu kỹ thuật chi tiết
-├── HUONG_DAN_CAO_DATA.md   # Hướng dẫn quy trình cào dữ liệu cho các dự án tương lai
+├── TAI_LIEU_KY_THUAT.md    # Tài liệu kỹ thuật: Cấu trúc JSON, kiến trúc bộ cào, thuật toán
+├── MAU_YEU_CAU_CAO_DATA.md # Cẩm nang & Biểu mẫu yêu cầu khi cần cào các trang web mới
 ├── 404_not_found.log       # Nhật ký lưu các liên kết tài nguyên lỗi 404 từ server
 ├── json/
 │   ├── alokiddy_cambridge.json   # Kết quả dữ liệu Cambridge dạng JSON (snake_case keys)
@@ -98,4 +108,4 @@ CaoData/
 3.  **Tự động ghi nhận lỗi 404:** Mọi liên kết tài nguyên bị lỗi hoặc viết sai chính tả từ phía server Alokiddy (ví dụ: `CHEECK.mp4` thay vì `CHEEK.mp4`, hay một số audio bài nghe bị thiếu) sẽ được tự động bỏ qua và ghi nhận chi tiết vào tệp `404_not_found.log` để bạn dễ dàng theo dõi.
 4.  **Bóc tách game Cocos:** Trình cào có khả năng "chui" vào các iframe trò chơi tương tác để tìm danh sách playlist video từ vựng ẩn dưới mã JavaScript mà các bộ cào thông thường không thể thấy.
 
-*Để xem tài liệu kỹ thuật chi tiết hơn về cấu trúc dữ liệu JSON, thuật toán xử lý DOM và các điểm mù của trang web Alokiddy, vui lòng tham khảo tệp [DOCUMENTATION.md](file:///c:/Users/ADMIN/Desktop/CaoData/DOCUMENTATION.md).*
+*Để xem tài liệu kỹ thuật chi tiết hơn về cấu trúc dữ liệu JSON, thuật toán xử lý DOM và các điểm mù của trang web Alokiddy, vui lòng tham khảo tệp [TAI_LIEU_KY_THUAT.md](file:///c:/Users/ADMIN/Desktop/CaoData/TAI_LIEU_KY_THUAT.md).*
