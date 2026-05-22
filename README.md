@@ -58,27 +58,35 @@ python scraper_phonics.py
 
 ---
 
-## 📂 Cấu trúc thư mục dữ liệu sau khi tải
-
-Tất cả tài nguyên tải về sẽ nằm gọn trong thư mục `downloads/`, được chuẩn hóa tên không dấu tránh lỗi ký tự trên Windows:
+## 📂 Cấu trúc thư mục dự án
 
 ```text
 CaoData/
+├── scraper.py              # Bộ cào Cambridge đơn luồng (tuần tự) - an toàn nhất
+├── scraper_parallel.py     # Bộ cào Cambridge đa luồng (tối đa 6 Chrome) - nhanh nhất
+├── scraper_phonics.py      # Bộ cào riêng khóa Phonics đa luồng (4 Chrome)
+├── requirements.txt        # Thư viện Python phụ thuộc
+├── README.md               # Hướng dẫn triển khai và vận hành nhanh (tệp hiện tại)
+├── DOCUMENTATION.md        # Tài liệu kỹ thuật chi tiết
+├── HUONG_DAN_CAO_DATA.md   # Hướng dẫn quy trình cào dữ liệu cho các dự án tương lai
+├── 404_not_found.log       # Nhật ký lưu các liên kết tài nguyên lỗi 404 từ server
 ├── json/
-│   ├── alokiddy_cambridge.json   # Lưu trữ cấu trúc bài học và đường dẫn nội bộ
-│   └── alokiddy_phonics.json     # Dữ liệu khóa học Phonics
-├── downloads/
-│   ├── cambridge/                # Tài nguyên giáo trình Cambridge
+│   ├── alokiddy_cambridge.json   # Kết quả dữ liệu Cambridge dạng JSON (snake_case keys)
+│   └── alokiddy_phonics.json     # Dữ liệu khóa học Phonics dạng JSON (snake_case keys)
+├── downloads/              # Thư mục lưu trữ tất cả tài nguyên đã tải về cục bộ
+│   ├── cambridge/          # Tài nguyên giáo trình Cambridge
 │   │   └── tieng_anh_lop_1/
 │   │       └── unit_1_this_is_his_face/
 │   │           ├── thumbnail.jpg
 │   │           └── bai_hoc/
 │   │               └── media/    # Chứa video chính (.mp4)
-│   └── phonics/                  # Tài nguyên khóa Phonics
+│   └── phonics/            # Tài nguyên khóa Phonics
 │       └── phonics_for_starters/
 │           └── unit_1_aa/
 │               └── ...
-└── 404_not_found.log             # Nhật ký lưu các link lỗi 404 của Alokiddy
+└── src/
+    ├── __init__.py         # Khởi tạo module src
+    └── downloader.py       # Công cụ tải tài nguyên tích hợp & độc lập
 ```
 
 ---

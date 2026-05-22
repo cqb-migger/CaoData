@@ -41,15 +41,23 @@
 
 ```
 CaoData/
-├── scraper.py              # Cào Cambridge, đơn luồng (tuần tự) - an toàn nhất
-├── scraper_parallel.py     # Cào Cambridge, đa luồng (tối đa 6 Chrome) - nhanh nhất
-├── scraper_phonics.py      # Cào riêng khóa Phonics, đa luồng (4 Chrome)
-├── requirements.txt        # Danh sách thư viện cần cài
-├── README.md               # Hướng dẫn setup ngắn gọn
-├── DOCUMENTATION.md        # File này - tài liệu kỹ thuật đầy đủ
-└── json/
-    ├── alokiddy_cambridge.json   # Output của scraper.py / scraper_parallel.py (~356 KB)
-    └── alokiddy_phonics.json     # Output của scraper_phonics.py (~22 KB)
+├── scraper.py              # Bộ cào Cambridge đơn luồng (tuần tự) - an toàn nhất
+├── scraper_parallel.py     # Bộ cào Cambridge đa luồng (tối đa 6 Chrome) - nhanh nhất
+├── scraper_phonics.py      # Bộ cào riêng khóa Phonics đa luồng (4 Chrome)
+├── requirements.txt        # Thư viện Python phụ thuộc
+├── README.md               # Hướng dẫn triển khai và vận hành nhanh
+├── DOCUMENTATION.md        # Tài liệu kỹ thuật chi tiết (tệp hiện tại)
+├── HUONG_DAN_CAO_DATA.md   # Hướng dẫn quy trình cào dữ liệu cho các dự án tương lai
+├── 404_not_found.log       # Nhật ký lưu các liên kết tài nguyên lỗi 404 từ server
+├── json/
+│   ├── alokiddy_cambridge.json   # Kết quả dữ liệu Cambridge dạng JSON (snake_case keys)
+│   └── alokiddy_phonics.json     # Dữ liệu khóa học Phonics dạng JSON (snake_case keys)
+├── downloads/              # Thư mục lưu trữ tất cả tài nguyên đã tải về cục bộ
+│   ├── cambridge/          # Tài nguyên giáo trình Cambridge được chia nhỏ theo khóa/bài
+│   └── phonics/            # Tài nguyên khóa Phonics được chia nhỏ theo bài/tab
+└── src/
+    ├── __init__.py         # Khởi tạo module src
+    └── downloader.py       # Công cụ tải tài nguyên tích hợp & độc lập
 ```
 
 ---
@@ -266,53 +274,72 @@ Trong iframe:
 
 ### `alokiddy_cambridge.json`
 
+Dữ liệu JSON sử dụng định dạng **tiếng Việt không dấu dạng `snake_case`** cho tất cả các trường khóa, đảm bảo khả năng tương thích cao và không gặp lỗi bảng mã ký tự. Sau khi chạy công cụ tải tài nguyên (`src/downloader.py`), cấu trúc JSON sẽ được cập nhật thêm các đường dẫn tải về cục bộ (`local` và `link_hinh_anh_local`).
+
 ```json
 {
-  "TÊN KHÓA HỌC": [
+  "TIẾNG ANH MẪU GIÁO LỚN": [
     {
-      "Tên Bài Học": "Unit 3: Drinks",
-      "Miễn phí": "Có",
-      "Link Hình Ảnh (Gốc)": "https://image.alokiddy.com.vn//.../Pre2_3.jpg",
-      "Nội Dung Chi Tiết": "Qua bài Unit 3: Drinks - Pre-Starters 2...",
-      "Link Bài Học": "https://alokiddy.com.vn/.../unit-3-drinks-ctm6677",
-      "Chi tiết tài nguyên": [
+      "ten_bai_hoc": "Unit 3: Drinks",
+      "mien_phi": "Có",
+      "link_hinh_anh_goc": "https://image.alokiddy.com.vn//Uploads/files/CAM_new_051118/Kiddy_2/Pre2_3.jpg",
+      "link_hinh_anh_local": "downloads/cambridge/tieng_anh_mau_giao_lon/unit_3_drinks/thumbnail.jpg",
+      "noi_dung_chi_tiet": "Qua bài Unit 3: Drinks - Pre-Starters 2...",
+      "link_bai_hoc": "https://alokiddy.com.vn/tieng-anh-moi/tieng-anh-mau-giao/unit-3-drinks-ctm6677",
+      "chi_tiet_tai_nguyen": [
         {
-          "Bài học": "Bài học",
-          "Link Icon": "https://image.alokiddy.com.vn/.../icon_baihoc_act.png",
-          "Link gốc": "https://alokiddy.com.vn/.../unit-3-drinks-6677?t=0",
-          "Tài nguyên Media": [
-            "https://file.alokiddy.com.vn//Uploads/files/video_CAM_2019/baihocchinh/Pre2/Pre2_03.mp4"
+          "ten_tab": "Bài học",
+          "link_icon": "https://image.alokiddy.com.vn/Uploads/files/icon_baihoc_act.png",
+          "link_goc": "https://alokiddy.com.vn/tieng-anh-moi/tieng-anh-mau-giao/unit-3-drinks-ctm6677?t=0",
+          "tai_nguyen_media": [
+            {
+              "url": "https://file.alokiddy.com.vn//Uploads/files/video_CAM_2019/baihocchinh/Pre2/Pre2_03.mp4",
+              "local": "downloads/cambridge/tieng_anh_mau_giao_lon/unit_3_drinks/bai_hoc/media/Pre2_03.mp4"
+            }
           ],
-          "Tài nguyên Hình ảnh": [],
-          "Nội dung văn bản": ""
+          "tai_nguyen_hinh_anh": [],
+          "noi_dung_van_ban": ""
         },
         {
-          "Bài học": "Từ vựng",
-          "Link Icon": "...",
-          "Link gốc": "...?t=1",
-          "Tài nguyên Media": [
-            "https://cdngame.alokiddy.com.vn/cocos/Video/vocabs/Pre2/U03/1.mp4",
-            "https://cdngame.alokiddy.com.vn/cocos/Video/vocabs/Pre2/U03/2.mp4",
-            "... (đến 19.mp4)"
+          "ten_tab": "Từ vựng",
+          "link_icon": "...",
+          "link_goc": "https://alokiddy.com.vn/tieng-anh-moi/tieng-anh-mau-giao/unit-3-drinks-ctm6677?t=1",
+          "tai_nguyen_media": [
+            {
+              "url": "https://cdngame.alokiddy.com.vn/cocos/Video/vocabs/Pre2/U03/1.mp4",
+              "local": "downloads/cambridge/tieng_anh_mau_giao_lon/unit_3_drinks/tu_vung/media/1.mp4"
+            },
+            {
+              "url": "https://cdngame.alokiddy.com.vn/cocos/Video/vocabs/Pre2/U03/2.mp4",
+              "local": "downloads/cambridge/tieng_anh_mau_giao_lon/unit_3_drinks/tu_vung/media/2.mp4"
+            }
           ],
-          "Tài nguyên Hình ảnh": ["https://cdngame.alokiddy.com.vn/icon/next.png"],
-          "Nội dung văn bản": "alokidy"
+          "tai_nguyen_hinh_anh": [],
+          "noi_dung_van_ban": ""
         },
         {
-          "Bài học": "Nghe hiểu",
-          "Link gốc": "...?t=4",
-          "Tài nguyên Media": [
-            "https://file.alokiddy.com.vn//Uploads/.../U03/L6.mp3",
-            "https://file.alokiddy.com.vn//Uploads/.../U03/L7.mp3"
+          "ten_tab": "Nghe hiểu",
+          "link_icon": "...",
+          "link_goc": "https://alokiddy.com.vn/tieng-anh-moi/tieng-anh-mau-giao/unit-3-drinks-ctm6677?t=4",
+          "tai_nguyen_media": [
+            {
+              "url": "https://file.alokiddy.com.vn//Uploads/files/CAM_new_051118/Kiddy_2/Audio/U03/L6.mp3",
+              "local": "downloads/cambridge/tieng_anh_mau_giao_lon/unit_3_drinks/nghe_hieu/media/L6.mp3"
+            }
           ],
-          "Nội dung văn bản": "Câu 1\nCon hãy nghe và chọn tranh đúng nhé...\nCâu trả lời đúng là:\nTranh số 1\nCoke.\n(Coca)..."
+          "tai_nguyen_hinh_anh": [],
+          "noi_dung_van_ban": "Câu 1\nCon hãy nghe và chọn tranh đúng nhé...\nCâu trả lời đúng là:\nTranh số 1\nCoke.\n(Coca)..."
         }
       ]
     },
     {
-      "Tên Bài Học": "Unit 4: Actions",
-      "Miễn phí": "Không",
-      "Chi tiết tài nguyên": []    ← bài trả phí: mảng rỗng
+      "ten_bai_hoc": "Unit 4: Actions",
+      "mien_phi": "Không",
+      "link_hinh_anh_goc": "https://image.alokiddy.com.vn//Uploads/files/CAM_new_051118/Kiddy_2/Pre2_4.jpg",
+      "link_hinh_anh_local": "downloads/cambridge/tieng_anh_mau_giao_lon/unit_4_actions/thumbnail.jpg",
+      "noi_dung_chi_tiet": "Bài học trả phí - chỉ lưu thông tin cơ bản.",
+      "link_bai_hoc": "https://alokiddy.com.vn/tieng-anh-moi/tieng-anh-mau-giao/unit-4-actions-ctm6678",
+      "chi_tiet_tai_nguyen": []
     }
   ]
 }
@@ -323,7 +350,7 @@ Trong iframe:
 - `TIẾNG ANH LỚP 1` (Starters 1)
 - ... (tương ứng các cấp độ Cambridge: Starters → Movers → Flyers)
 
-**Các tab hoạt động thường gặp (`"Bài học"` trong `Chi tiết tài nguyên`):**
+**Các tab hoạt động thường gặp (`"ten_tab"` trong `chi_tiet_tai_nguyen`):**
 
 | Tab | Tham số URL | Loại media |
 |---|---|---|
@@ -341,7 +368,7 @@ Trong iframe:
 
 ### `alokiddy_phonics.json`
 
-Cùng cấu trúc nhưng `Chi tiết tài nguyên` chứa tối đa 4 tab:
+Cấu trúc hoàn toàn tương tự nhưng `chi_tiet_tai_nguyen` chứa tối đa 4 tab tương ứng với các nút tên lửa hoạt động:
 
 | Tab | Class CSS nút tên lửa |
 |---|---|
@@ -350,7 +377,7 @@ Cùng cấu trúc nhưng `Chi tiết tài nguyên` chứa tối đa 4 tab:
 | `"Luyện tập"` | `cl-3` |
 | `"Bài hát"` | `cl-6` |
 
-> **Lưu ý:** `"Link Icon": ""` — Phonics dùng CSS sprite class, không có file icon ảnh riêng.
+> **Lưu ý:** Trường `"link_icon"` cho các tab Phonics là chuỗi rỗng (`""`) vì giao diện Phonics sử dụng lớp CSS sprites thay vì các tệp hình ảnh icon độc lập.
 
 ---
 
@@ -498,40 +525,40 @@ for course in courses:               # courses: list theo thứ tự gốc
 
 ### ❌ Bài trả phí bị bỏ qua tài nguyên
 
-`Chi tiết tài nguyên` = `[]` với mọi bài có `"Miễn phí": "Không"`. Không có cơ chế bypass paywall.
+Mảng `chi_tiet_tai_nguyen` sẽ để rỗng (`[]`) đối với mọi bài học có nhãn `"mien_phi": "Không"` vì không có cơ chế vượt rào bảo mật tài khoản (bypass paywall).
 
 ### ❌ Tab "Trò chơi" thường rỗng
 
-Các game HTML5/Flash trong tab Trò chơi 1, Trò chơi 2 có cơ chế load động phức tạp → scraper không bóc tách được media.
+Các trò chơi tương tác HTML5/Flash trong tab Trò chơi 1 và Trò chơi 2 sử dụng các cơ chế kết xuất đồ họa và tài nguyên động vô cùng phức tạp, khiến các bộ scraper không thể bóc tách file media một cách ổn định.
 
 ```json
 {
-  "Bài học": "Trò chơi 1",
-  "Tài nguyên Media": [],    ← thường rỗng
-  "Tài nguyên Hình ảnh": [],
-  "Nội dung văn bản": ""
+  "ten_tab": "Trò chơi 1",
+  "tai_nguyen_media": [],
+  "tai_nguyen_hinh_anh": [],
+  "noi_dung_van_ban": ""
 }
 ```
 
 ### ❌ Tab "Luyện phát âm" đôi khi rỗng
 
-Tính năng thu âm giọng nói của học viên — không có media để cào. Tab chỉ chứa giao diện microphone.
+Tính năng ghi âm giọng nói trực tiếp của học viên để chấm điểm không sử dụng tệp âm thanh tĩnh từ phía máy chủ, do đó trình cào chỉ nhận diện được giao diện micro mà không thu thập được media.
 
 ### ⚠️ Văn bản game Cocos thô
 
-Khi cào trong iframe game, `text_content` thường là `"alokidy"` (watermark game) thay vì nội dung thật. Văn bản thật thường chỉ lấy được ở tab Nghe hiểu và Luyện nói (trang HTML thường có `#LessonContent`).
+Khi bóc tách văn bản bên trong iframe trò chơi, trường `noi_dung_van_ban` thường chỉ thu được từ khóa `"alokidy"` (watermark của game) thay vì các đoạn hội thoại thực tế. Nội dung văn bản chi tiết và câu hỏi chỉ có thể thu thập đầy đủ ở các trang HTML truyền thống có chứa phần tử `#LessonContent` (như tab Nghe hiểu hoặc Luyện nói).
 
-### ⚠️ Ảnh "rác" đôi khi lọt qua
+### 🛡️ Ảnh "rác" đã được lọc triệt để (Đã khắc phục)
 
-Tab Từ vựng thường lấy được 2 ảnh `next.png` và `pre.png` (nút điều hướng game Cocos). Chúng không bị lọc vì không nằm trong danh sách `EXCLUDE_IMAGE_KEYWORDS`.
+Các tệp hình ảnh nút điều hướng hoặc icon trò chơi (`next.png`, `pre.png`...) trước đây có thể lọt qua bộ lọc của trình cào. Hiện tại, cơ chế đã được tối ưu hóa thông qua danh sách loại trừ `EXCLUDE_DOWNLOAD_KEYWORDS` trong `src/downloader.py` and `EXCLUDE_IMAGE_KEYWORDS` trong các bộ scraper để lọc sạch các ảnh giao diện này.
 
-### ⚠️ `pandas` và `openpyxl` trong requirements nhưng chưa dùng
+### ⚠️ Thư viện `pandas` và `openpyxl` chưa được sử dụng
 
-Có thể đây là kế hoạch xuất Excel trong tương lai, hoặc code cũ chưa dọn.
+Hai thư viện này được khai báo trong tệp `requirements.txt` nhưng chưa có mã nguồn tham chiếu trực tiếp trong dự án hiện tại. Đây có thể là sự chuẩn bị cho tính năng xuất báo cáo Excel trong tương lai.
 
-### ⚠️ `time.sleep()` cứng nhắc
+### ⚠️ Cơ chế `time.sleep()` cố định
 
-Thời gian chờ cố định (`1.5s`, `2s`) không thích ứng với tốc độ mạng. Mạng chậm có thể gây thiếu dữ liệu, mạng nhanh gây lãng phí thời gian. Giải pháp tốt hơn là dùng `WebDriverWait` với `until(EC.presence_of_element_located(...))`.
+Việc sử dụng thời gian chờ cứng (`1.5s`, `2s`) có thể gây ra hiện tượng thiếu dữ liệu nếu băng thông mạng không ổn định, hoặc lãng phí thời gian khi mạng tải quá nhanh. Định hướng cải tiến tối ưu nhất là thay thế bằng cơ chế chờ động thông qua `WebDriverWait` kết hợp `expected_conditions`.
 
 ---
 
@@ -607,13 +634,13 @@ CaoData/
 
 | Câu hỏi | Trả lời |
 |---|---|
-| Khóa học được tìm ở đâu? | Trang `alokiddy.com.vn/gioi-thieu-ve-cambridge-n/...`, CSS `div.list > div.item` |
-| Bài học miễn phí nhận diện như thế nào? | Element `.lb_free` tồn tại bên trong `.item_box` |
-| Tab hoạt động được điều hướng như thế nào? | Thêm `?t=0`, `?t=1`, `?t=2`... vào link bài học (Cambridge); hoặc click `a.floating` (Phonics) |
-| Video từ vựng ở đâu? | `cdngame.alokiddy.com.vn/cocos/Video/vocabs/[khóa]/U[xx]/[n].mp4` |
-| Video bài học chính ở đâu? | `file.alokiddy.com.vn/Uploads/files/video_CAM_2019/baihocchinh/[khóa]/...mp4` |
-| Audio nghe hiểu/luyện nói? | `file.alokiddy.com.vn/Uploads/files/CAM_new_051118/[khóa]/Audio/...mp3` |
-| Tại sao có scraper.py và scraper_parallel.py? | Cùng mục tiêu, khác chiến lược: đơn luồng (an toàn/tiết kiệm RAM) vs đa luồng (nhanh/tốn RAM) |
-| Tại sao Phonics tách riêng? | Cấu trúc HTML khác hoàn toàn, cần logic nhận diện và điều hướng riêng |
-| `pandas` trong requirements để làm gì? | Chưa được dùng — có thể dự phòng cho tính năng xuất Excel tương lai |
-| Dừng chương trình giữa chừng? | Ctrl+C → được bắt bởi `except KeyboardInterrupt`, driver tắt sạch trong `finally` |
+| Khóa học được tìm ở đâu? | Trang listing `alokiddy.com.vn/gioi-thieu-ve-cambridge-n/...`, thẻ `div.list > div.item` |
+| Bài học miễn phí nhận diện như thế nào? | Phần tử `.lb_free` tồn tại bên trong khung `.item_box` chứa bài học |
+| Tab hoạt động được điều hướng như thế nào? | Thêm tham số `?t=0`, `?t=1`, `?t=2`... vào URL bài học (Cambridge); hoặc click nút `a.floating` (Phonics) |
+| Video từ vựng ở đâu? | Đường dẫn máy chủ `cdngame.alokiddy.com.vn/cocos/Video/vocabs/[khóa]/U[xx]/[n].mp4` |
+| Video bài học chính ở đâu? | Đường dẫn máy chủ `file.alokiddy.com.vn/Uploads/files/video_CAM_2019/baihocchinh/[khóa]/...mp4` |
+| Audio nghe hiểu/luyện nói ở đâu? | Đường dẫn máy chủ `file.alokiddy.com.vn/Uploads/files/CAM_new_051118/[khóa]/Audio/...mp3` |
+| Tại sao có scraper.py và scraper_parallel.py? | Cùng mục tiêu, khác phương thức vận hành: đơn luồng (an toàn, ổn định RAM) và đa luồng (tối đa hóa tốc độ cào song song) |
+| Tại sao Phonics phải tách riêng? | Do cấu trúc giao diện HTML và cách chuyển đổi tab của khóa Phonics khác hoàn toàn với Cambridge |
+| Thư viện `pandas` trong requirements làm gì? | Chưa được sử dụng trong phiên bản hiện tại — định hướng xuất dữ liệu ra tệp Excel trong tương lai |
+| Làm thế nào dừng chương trình an toàn? | Nhấn phím `Ctrl + C` trên terminal, trình điều khiển sẽ tự động đóng toàn bộ trình duyệt Chrome trong khối `finally` trước khi thoát |
